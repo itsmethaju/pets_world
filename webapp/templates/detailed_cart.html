@@ -1,0 +1,93 @@
+{% extends 'layout_user.html' %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col s12 center-align">
+			<h5 style="font-weight:bold;" class="blue-text text-darken-4">DETAILED CART</h5>
+		</div>
+		<div class="col s12">
+			{% if userCart %}
+				<div style="overflow-x: auto;">
+					<table class="highlight centered">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Item Name</th>
+								<th>Quantity</th>
+								<th>Price (Per Unit)</th>
+								<th>Total Price</th>
+								<th>Stock Status</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for i in userCart %}
+								<tr>
+									<td><img src="{{userCart[i]['itemDetails']['imgList'][0]['imgUrl']}}" style="width : 3rem; height: 2rem;"></td>
+									<td class="blue-grey-text text-lighten-1" style="text-transform: capitalize;">
+										<a href="{{url_for('othItemProfile', itemID=i)}}">
+											<span style="text-decoration: underline;">{{userCart[i]['itemDetails']['name']}}</span>
+										</a>
+									</td>
+									<td class="blue-grey-text text-lighten-1">{{userCart[i]['qty']}}</td>
+									<td class="blue-grey-text text-lighten-1">{{userCart[i]['itemDetails']['rate']}}</td>
+									<td class="blue-grey-text text-lighten-1">{{userCart[i]['totalPrice']}}/-</td>
+									<td class="blue-grey-text text-lighten-1" style="text-transform: capitalize;">{{userCart[i]['stockStatus']}}</td>
+									<td><a href="#edit-cart_{{i}}" class="modal-trigger btn blue darken-4">EDIT</a></td>
+									<div id="edit-cart_{{i}}" class="modal">
+										<form action="{{url_for('updateCartItem')}}" method="post">
+											<div class="modal-content">
+										    	<h5 class="blue-text text-darken-4" style="font-weight: bold;">Enter the quantity of <span style="text-transform: capitalize;">{{userCart[i]['itemDetails']['name']}}</span></h5>
+										    	<div class='input-field'>
+													<i class="material-icons prefix">looks_one</i>
+													<input id='input-quantity' type="number" name="qty" required class="validate" min="1" value="{{userCart[i]['qty']}}">
+													<label for='input-quantity'>Quantity</label>
+												</div>
+										    </div>
+										    <div class="modal-footer">
+									    		<input type="hidden" name="itemID" value="{{i}}">
+									    		<input type="submit" name="" value="UPDATE" class="btn-flat blue-text text-darken-4">
+										    </div>
+									    </form>
+									</div>
+									<td><a href="#delete-cart_{{i}}" class="modal-trigger btn blue darken-4">DELETE</a></td>
+									<div id="delete-cart_{{i}}" class="modal">
+										<div class="modal-content">
+									    	<h4>Delete <span style="text-transform: capitalize;">{{userCart[i]['itemDetails']['name']}}</span> from Cart</h4>
+									      	<p>Are you sure to delete this item from cart?</p>
+									    </div>
+									    <div class="modal-footer">
+									    	<form action="{{url_for('deleteCartItem')}}" method="post" style="display: inline-block;">
+									    		<input type="hidden" name="itemID" value="{{i}}">
+									    		<input type="submit" name="" value="DELETE" class="btn-flat red-text">
+									    	</form>
+									    </div>
+									</div>
+								</tr>
+							{% endfor %}
+						</tbody>
+						<tfoot>
+							<tr>
+								<th class="center-align">Grand Total</th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th class="center-align">{{grandTotal}}/-</th>
+								<th></th>
+								<th></th>
+								<th></th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			{% endif %}
+		</div>
+		{% if grandTotal != 0 %}
+		<div class="col s12 center-align" style="margin-top: 1rem">
+			<a href="{{url_for('purchaseDetails')}}" class="btn blue darken-4">Procce To Buy</a>
+		</div>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}

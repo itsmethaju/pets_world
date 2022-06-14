@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+	{% if session == 'admin' %}
+		<title>ADMIN - PETS WORLD</title>
+	{% elif session == 'user' %}
+		<title>PETS WORLD</title>
+	{% endif %}
+	<!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/login.css')}}">
+</head>
+<body>
+	<nav>
+		<div class='nav-wrapper blue darken-4 navigation-bar'>
+			{% if session == 'user' %}
+				<a class='brand-logo valign-wrapper' href="{{url_for('homePage')}}">
+					<span class="title-name-sm hide-on-med-and-up">PETS WORLD</span>
+					<span class="title-name-l hide-on-small-only">PETS WORLD</span>
+				</a>
+			{% elif session == 'admin' %}
+				<a class='brand-logo valign-wrapper' href="">
+					<span class="title-name-sm hide-on-med-and-up">PETS WORLD</span>
+					<span class="title-name-l hide-on-small-only">PETS WORLD</span>
+				</a>
+			{% endif %}
+		</div>
+	</nav>
+	<div class="container login-form">
+		<div class='row'>
+			<div class="card-panel grey lighten-4 col s12 l8 offset-l2">
+				<form action="{{url_for('login')}}" method="post">
+					<div class="row">
+						{% if session == 'user' %}
+							<h5 class='col s12 center-align blue-text text-darken-4'>USER LOGIN</h5>
+						{% elif session == 'admin' %}
+							<h5 class='col s12 center-align blue-text text-darken-4'>ADMIN LOGIN</h5>
+						{% endif %}
+					</div>
+					<div class='row'>
+						<div class='input-field col s8 offset-s2'>
+							<i class="material-icons prefix">email</i>
+							<input id='login-email' type="email" name="email" required class="validate">
+							<label for='login-email'>Email</label>
+						</div>
+					</div>
+					<div class='row'>
+						<div class='input-field col s8 offset-s2'>
+							<i class="material-icons prefix">lock</i>
+							<input id='login-password' type="password" name="password" required class="validate">
+							<label for='login-password'>Password</label>
+						</div>
+					</div>
+					<div class='row center-align'>
+						<div class='input-field col s8 offset-s2'>
+							<!-- <i class="material-icons prefix">lock</i> -->
+							<input type="hidden" name="session" value="{{session}}">
+							<input type="hidden" name="itemID" value="{{itemID}}">
+							<input class='btn blue darken-4' type="submit" name="submit" value="LOGIN" style="width:100%">
+						</div>
+					</div>
+				</form>
+				{% if session == 'user' %}
+				<div class='row center-align'>
+					<div class='input-field col s8 offset-s2'>
+						Not a member?<a href="#modal1" class="blue-text text-darken-4 modal-trigger">Signup</a>
+					</div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	<div id="modal1" class="modal">
+		<form action="{{url_for('signup')}}" method="post" enctype="multipart/form-data">
+			<div class="modal-content">
+				<h5 class='col s12 center-align blue-text text-darken-4'>USER REGISTRATION</h5>
+				<div class='input-field signup-form'>
+					<i class="material-icons prefix">account_circle</i>
+					<input id='input-name' type="text" name="name" required class="validate">
+					<label for='input-name'>Name</label>
+				</div>
+				<div class='input-field signup-form'>
+					<i class="material-icons prefix">smartphone</i>
+					<input id='input-mobilenumber' type="text" name="mobileNumber" required class="validate">
+					<label for='input-mobilenumber'>Mobile Number</label>
+				</div>
+				<div class='input-field signup-form'>
+					<i class="material-icons prefix">email</i>
+					<input id='input-email' type="email" name="email" required class="validate">
+					<label for='input-email'>Email</label>
+				</div>
+				<div class='input-field signup-form'>
+					<i class="material-icons prefix">password</i>
+					<input id='input-password' type="text" name="password" required class="validate">
+					<label for='input-password'>Password</label>
+				</div>
+				<div class='input-field signup-form'>
+					<i class="material-icons prefix">location_city</i>
+					<input id='input-city' type="text" name="city" required class="validate">
+					<label for='input-city'>City</label>
+				</div>
+				<div class="file-field input-field signup-form">
+					<div class="btn blue darken-4">
+						<span>PHOTO</span>
+						<input type="file" name="photo" class="validate">
+					</div>
+					<div class="file-path-wrapper">
+						<input class="file-path validate" type="text">
+					</div>
+				</div>
+				<div class="input-field signup-form">
+					<i class="material-icons prefix">place</i>
+	          		<textarea id="textarea1" class="materialize-textarea validate" name="address" required></textarea>
+	          		<label for="textarea1">Address</label>
+	        	</div>
+	        </div>
+		  	<div class="modal-footer signup-form">
+		  		<button type="submit" class="btn blue darken-4">SIGNUP</button>
+		  		<a href="#!" class="modal-close btn-flat"><i class="material-icons left" style="color:black;">close</i>CLOSE</a>
+		  	</div>
+	  	<form>
+	</div>
+	<!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript">
+    	document.addEventListener('DOMContentLoaded', function() {
+    		var elems = document.querySelectorAll('.modal');
+    		var instances = M.Modal.init(elems, {dismissible: false});
+    	});
+    </script>
+</body>
+</html>

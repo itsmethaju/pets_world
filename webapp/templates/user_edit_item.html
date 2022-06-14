@@ -1,0 +1,101 @@
+{% extends 'layout_user.html' %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col s12">
+			<ul class="tabs">
+				<li class="tab col s6"><a class="blue-text text-darken-4" href="#item-info">INFO</a></li>
+				<li class="tab col s6"><a class="blue-text text-darken-4" href="#item-images">IMAGES</a></li>
+			</ul>
+		</div>
+		<div class="col s12" id="item-info">
+			<div class="card-panel grey lighten-2">
+				<div class="row">
+					<div class="col s12 center-align">
+						<h5 class='blue-text text-darken-4' style="text-decoration: underline; font-weight: bold;">EDIT AD</h5>
+					</div>
+					<form action="{{url_for('updateItemData')}}" method="post">
+						<div class="col s12 input-field">
+						<i class="fas fa-pen prefix"></i>
+						<input type="text" name="name" id='item-name' class="validate" value="{{itemDetails['name']}}" required>
+						<label for="item-name">Item Name</label>
+					</div>
+					<div class="col s12 input-field">
+						<i class="material-icons prefix">category</i>
+					    <select name="catID" required>
+					    	<option value="" disabled>Select Category</option>
+					    	{% for i in categoryList %}
+					    		{% if i == itemDetails['catID'] %}
+						      		<option value="{{i}}" selected>{{categoryList[i]['name']}}</option>
+						      	{% else %}
+						      		<option value="{{i}}">{{categoryList[i]['name']}}</option>
+						      	{% endif %}
+					      	{% endfor %}
+					    </select>
+					</div>
+					<div class="col s12 m12 l6 input-field">
+						<i class="fas fa-rupee-sign prefix"></i>
+						<input type="number" name="rate" id='item-rate' class="validate" value="{{itemDetails['rate']}}" required>
+						<label for="item-rate">Rate (per unit)</label>
+					</div>
+					<div class="col s12 m12 l6 input-field">
+						<i class="material-icons prefix">looks_one</i>
+						<input type="number" name="stock" id='item-stock' class="validate" value="{{itemDetails['stock']}}" required>
+						<label for="item-stock">Stock</label>
+					</div>
+					<div class="col s12 input-field">
+						<i class="material-icons prefix">description</i>
+						<textarea class="materialize-textarea validate" name="description" id='item-desc' required>{{itemDetails['description']}}</textarea>
+						<label for="item-desc">Description</label>
+					</div>
+						<div class="col s12 center-align">
+							<input type="hidden" name="itemID" value="{{itemID}}">
+							<input type="submit" name="" value='UPDATE' class="btn blue darken-4">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col s12" id="item-images">
+			<div class="row">
+				<div class="col s12 center-align" style="margin-top: 1rem;">
+					<span style="font-weight: bold; text-decoration: underline;">ADD MORE PHOTOS</span>
+				</div>
+				<form action="{{url_for('addItemImg')}}" method="post" enctype="multipart/form-data">
+					<div class="col s12 m10 l10 file-field input-field">
+						<div class="btn blue darken-4">
+							<span>ITEM PHOTOS</span>
+							<input type="file" name="photo" multiple class="validate" required>
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
+					</div>
+					<div class="col s12 m2 l2">
+						<input type="hidden" name="itemID" value="{{itemID}}">
+						<input type="submit" name="" value="UPLOAD" class="btn blue darken-4" style="margin-top: 1rem;">
+					</div>
+				</form>
+				{% for i in itemDetails['imgList'] %}
+					<div class="col s12 m6 l6" style="margin-top:.5rem">
+						<div class="row">
+							<div class="col s12">
+								<img class="responsive-img" src="{{i['imgUrl']}}" style="height: 20rem">
+							</div>
+							<div class="col s12 center-align">
+								<form action="{{url_for('deleteItemImg')}}" method="post">
+									<input type="hidden" name="imgName" value="{{i['imgName']}}">
+									<input type="hidden" name="itemID" value="{{itemID}}">
+									<input class="btn blue darken-4" type="submit" name="" value="DELETE">
+								</form>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+				
+				
+		</div>
+	</div>
+</div>
+{% endblock %}

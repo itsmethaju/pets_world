@@ -1,0 +1,98 @@
+{% extends 'layout_admin.html' %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col s12">
+			<ul class="tabs">
+				<li class="tab col s6"><a class="blue-text text-darken-4" href="#category-list">Category List</a></li>
+				<li class="tab col s6"><a class="blue-text text-darken-4" href="#add-category">Add Category</a></li>
+			</ul>
+		</div>
+		<div class="col s12" id="category-list">
+			{% if categoryList %}
+				<div style="overflow-x: auto;">
+					<table class="highlight centered">
+						<thead>
+							<tr>
+								<th>CatID</th>
+								<th>Name</th>
+								<th>#</th>
+								<th>#</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for i in categoryList %}
+								<tr>
+									<td class="blue-grey-text text-lighten-1">{{i}}</td>
+									<td class="blue-grey-text text-lighten-1" style="text-transform: capitalize;">{{categoryList[i]['name']}}</td>
+									{% if i != 'CATOTH' %}
+										<td>
+											<a href="#{{i}}_edit" class='btn blue darken-4 modal-trigger'>
+												<i class="material-icons left hide-on-small-only" style="color:white">edit</i>
+												EDIT
+											</a>
+										</td>
+										<div id="{{i}}_edit" class="modal">
+											<form action="{{url_for('updateCategory')}}" method="post">
+												<div class="modal-content">
+											    	<h5 class="blue-text text-darken-4" style="font-weight: bold;">Edit Category {{i}}</h5>
+											    	<div class='input-field'>
+														<i class="material-icons prefix">edit</i>
+														<input id='input-name' type="text" name="name" required class="validate" value="{{categoryList[i]['name']}}">
+														<label for='input-name'>Category Name</label>
+													</div>
+											    </div>
+											    <div class="modal-footer">
+										    		<input type="hidden" name="catID" value="{{i}}">
+										    		<input type="submit" name="" value="UPDATE" class="btn-flat blue-text text-darken-4">
+											    </div>
+										    </form>
+										</div>
+										<td>
+											<a href="#{{i}}_delete" class='btn blue darken-4 modal-trigger'>
+												<i class="material-icons left hide-on-small-only" style="color:white">delete</i>
+												DELETE
+											</a>
+										</td>
+										<div id="{{i}}_delete" class="modal">
+											<div class="modal-content">
+										    	<h4>DELETE CATEGORY {{i}}</h4>
+										      	<p>Are you sure to delete this category?</p>
+										    </div>
+										    <div class="modal-footer">
+										    	<form action="{{url_for('deleteCategory')}}" method="post" style="display: inline-block;">
+										    		<input type="hidden" name="catID" value="{{i}}">
+										    		<input type="submit" name="" value="DELETE" class="btn-flat red-text">
+										    	</form>
+										    </div>
+										</div>
+									{% endif %}
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			{% endif %}
+		</div>
+		<div class="col s12" id="add-category">
+			<div class="card-panel grey lighten-2">
+				<div class="row">
+					<div class="col s12 center-align">
+						<h5 class='blue-text text-darken-4' style="text-decoration: underline; font-weight: bold;">ADD CATEGORY</h5>
+					</div>
+					<form action="{{url_for('addCategory')}}" method="post">
+						<div class="col s12 input-field">
+							<i class="fas fa-pen prefix"></i>
+							<input type="text" name="name" id='category-name' class="validate" required>
+							<label for="category-name">Category Name</label>
+						</div>
+						<div class="col s12 center-align">
+							<input type="submit" name="" value='ADD CATEGORY' class="btn blue darken-4">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="icon" type="image/x-icon" href="static/images/favicon.ico"> -->
+  <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='images/favicon.ico')}}">
+  <title>PETS WORLD</title>
+  <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/0bcccc8139.js" crossorigin="anonymous"></script>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/home.css')}}">
+</head>
+<body>
+  <div class="navbar-fixed">
+    <nav>
+      <div class='nav-wrapper blue darken-4 navigation-bar'>
+        <a class='brand-logo' href="{{url_for('homePage')}}">
+          <span class="title-name-sm hide-on-med-and-up valign-wrapper">PETS WORLD</span>
+          <span class="title-name-l hide-on-small-only">PETS WORLD</span>
+        </a>
+        <ul class="right">
+            <li>
+              <a href="{{url_for('loginPage', itemID='nill')}}">
+                <i class="material-icons left white-text">login</i>
+                LOGIN
+              </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  {% block content %}
+  {% endblock %}
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Sidenav.init(elems);
+    });
+  </script>
+
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.dropdown-trigger');
+      var dropdownOptions = {
+        coverTrigger : false,
+        constrainWidth: false
+      }
+      var instances = M.Dropdown.init(elems, dropdownOptions);
+    });
+  </script>
+
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.collapsible');
+      var instances = M.Collapsible.init(elems);
+    });
+  </script>
+
+  <script type="text/javascript">
+    var el = document.querySelector('.tabs');
+    var instance = M.Tabs.init(el);
+  </script>
+
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.img-show-1');
+      options = {height:360}
+      var instances = M.Slider.init(elems, options);
+    });
+  </script>
+
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.img-show-2');
+      options = {height:210}
+      var instances = M.Slider.init(elems, options);
+    });
+  </script>
+
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.modal');
+      var instances = M.Modal.init(elems, {dismissible: true});
+    });
+  </script>
+</body>
+</html>

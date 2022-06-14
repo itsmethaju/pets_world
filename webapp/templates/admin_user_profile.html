@@ -1,0 +1,235 @@
+{% extends 'layout_admin.html' %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col s12">
+			<ul class="tabs">
+				<li class="tab col s3"><a class="blue-text text-darken-4" href="#user-profile">User Details</a></li>
+				<li class="tab col s3"><a class="blue-text text-darken-4" href="#item-list">Item List</a></li>
+				<li class="tab col s3"><a class="blue-text text-darken-4" href="#user-history">History</a></li>
+				<li class="tab col s3"><a class="blue-text text-darken-4" href="#user-cart">Cart</a></li>
+			</ul>
+		</div>
+		<div class="col s12" id="user-profile">
+			<div class="card-panel grey lighten-2">
+				<div class="row">
+					<div class= "col s12 center-align">
+						<img src="{{userDetails['imgUrl']}}" class="circle responsive-img z-depth-1" style="height: 6rem; width: 6rem;">
+					</div>
+					<div class= "col s12 center-align">
+						<h5 class="blue-text text-darken-4" style="text-transform: capitalize; font-weight: bold;">{{userDetails['name']}}</h5>
+						<span class="blue-grey-text text-lighten-1">{{userDetails['email']}}</span>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">Name</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold; text-transform: capitalize;">{{userDetails['name']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">Mobile Number</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold;">{{userDetails['mobileNumber']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">Email</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold; overflow-wrap: break-word;">{{userDetails['email']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">City</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold; overflow-wrap: break-word; text-transform: capitalize;">{{userDetails['city']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">Address</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold; overflow-wrap: break-word;">{{userDetails['address']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class="col s12 user-sec center-align">
+						<a href="{{url_for('adminChatPage', recID=userID)}}" class="btn blue darken-4">
+							<i class="material-icons white-text left">chat</i>
+							CHAT
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col s12" id="user-history">
+			{% if transHistory %}
+				<div style="overflow-x: auto;">
+					<table class="highlight centered">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Date</th>
+								<th>Item Name</th>
+								<th>Quantity</th>
+								<th>Price (Per Unit)</th>
+								<th>Total Price</th>
+								<th>Seller Name</th>
+								<th>Buyer Name</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for i in transHistory %}
+								<tr>
+									<td><img src="{{transHistory[i]['itemDetails']['imgList'][0]['imgUrl']}}" style="width : 3rem; height: 2rem;"></td>
+									<td class="blue-grey-text text-lighten-1">{{transHistory[i]['date']}}</td>
+									<td class="blue-grey-text text-lighten-1" style="text-transform: capitalize;">{{transHistory[i]['itemDetails']['name']}}</td>
+									<td class="blue-grey-text text-lighten-1">{{transHistory[i]['qty']}}</td>
+									<td class="blue-grey-text text-lighten-1">{{transHistory[i]['itemDetails']['rate']}}</td>
+									<td class="blue-grey-text text-lighten-1">{{transHistory[i]['totalPrice']}}</td>
+									<td class="blue-grey-text text-lighten-1" style="text-transform: capitalize;">{{transHistory[i]['sellerDetails']['name']}}</td>
+									<td class="blue-grey-text text-lighten-1" style="text-transform: capitalize;">{{transHistory[i]['buyerDetails']['name']}}</td>
+									<td><a href="{{url_for('adminTransDetails', transID=i)}}" class="btn blue darken-4">Details</a></td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			{% endif %}
+		</div>
+		<div class="col s12" id="item-list">
+	    	<div class="row">
+	    		{%for i in itemList%}
+		    		<div class="col s12">
+		    			<div class="card horizontal">
+				      		<div class="card-image">
+				        		<img class="hide-on-small-only" src="{{itemList[i]['imgList'][0]['imgUrl']}}" style="height: 13rem; width: 17rem;">
+				        		<img class="hide-on-med-and-up responsive-img" src="{{itemList[i]['imgList'][0]['imgUrl']}}" style="height: 100%; width: 100%;">
+				      		</div>
+				      		<div class="card-stacked">
+				        		<div class="card-content">
+				          			<p class="grey-text text-darken-3" style="font-weight: bold; margin:0; text-transform: capitalize;">{{itemList[i]['name']}}</p>
+				          			{% if itemList[i]['averageRating'] == 5 %}
+							            <span>
+							            	<i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							            </span>
+							        {% elif itemList[i]['averageRating'] == 4 %}
+							            <span>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							            </span>
+							        {% elif itemList[i]['averageRating'] == 3 %}
+							            <span>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							            </span>
+							        {% elif itemList[i]['averageRating'] == 2 %}
+							            <span>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							            </span>
+							        {% elif itemList[i]['averageRating'] == 1 %}
+							            <span>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							            </span>
+							        {% elif itemList[i]['averageRating'] == 0 %}
+							            <span>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							            </span>
+							        {% endif %}
+				          			<p class="blue-text text-darken-4" style="font-weight: bold;"><i class="fas fa-rupee-sign"></i>{{itemList[i]['rate']}}/-</p>
+				          			<p>
+				          				<span style="font-weight:500;" class="grey-text">Stock:</span>
+				          				<span style="font-weight: bold;">{{itemList[i]['stock']}}</span>
+				          			</p>
+				        		</div>
+				        		<div class="card-action">
+				          			<a href="{{url_for('adminItemProfile', itemID=i)}}">MORE DETAILS</a>
+				        		</div>
+				      		</div>
+				    	</div>
+		    		</div>
+		    	{% endfor %}
+	    	</div>	
+		</div>
+		<div class="col s12" id="user-cart">
+			{% if userCart %}
+				<div style="overflow-x: auto;">
+					<table class="highlight centered">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Item Name</th>
+								<th>Quantity</th>
+								<th>Price (Per Unit)</th>
+								<th>Total Price</th>
+								<th>Stock Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for i in userCart %}
+								<tr>
+									<td><img src="{{userCart[i]['itemDetails']['imgList'][0]['imgUrl']}}" style="width : 3rem; height: 2rem;"></td>
+									<td class="blue-grey-text text-lighten-1" style="text-transform: capitalize;">
+										<a href="{{url_for('adminItemProfile', itemID=i)}}">
+											<span style="text-decoration: underline;">{{userCart[i]['itemDetails']['name']}}</span>
+										</a>
+									</td>
+									<td class="blue-grey-text text-lighten-1">{{userCart[i]['qty']}}</td>
+									<td class="blue-grey-text text-lighten-1">{{userCart[i]['itemDetails']['rate']}}</td>
+									<td class="blue-grey-text text-lighten-1">{{userCart[i]['totalPrice']}}/-</td>
+									<td class="blue-grey-text text-lighten-1" style="text-transform: capitalize;">{{userCart[i]['stockStatus']}}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+						<tfoot>
+							<tr>
+								<th class="center-align">Grand Total</th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th class="center-align">{{grandTotal}}/-</th>
+								<th></th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}

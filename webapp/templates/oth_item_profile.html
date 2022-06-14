@@ -1,0 +1,389 @@
+{% extends 'layout_user.html' %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col s12">
+			<ul class="tabs">
+				<li class="tab col s6"><a class="blue-text text-darken-4" href="#item-profile">Item Details</a></li>
+				<li class="tab col s6"><a class="blue-text text-darken-4" href="#user-profile">Seller Details</a></li>
+			</ul>
+		</div>
+		<div class="col s12 m12 l8 offset-l2" id="item-profile">
+			<div class="card-panel">
+				<div class="slider hide-on-small-only img-show-1">
+					<ul class="slides">
+						{% for i in itemDetails['imgList']%}
+						<li>
+							<img src="{{i['imgUrl']}}" style="width:38rem; height: 24rem;">
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="slider hide-on-med-and-up img-show-2">
+					<ul class="slides">
+						{% for i in itemDetails['imgList']%}
+						<li>
+							<img class="" src="{{i['imgUrl']}}" style="width:21rem; height: 15rem;">
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="row">
+					<div class="col s12">
+						<span class="blue-text text-darken-4" style="font-weight:bold;">Details</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>Name</span>
+					</div>
+					<div class="col s3">
+						<span style="font-weight:600; text-transform:capitalize;">{{itemDetails['name']}}</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>Price</span>
+					</div>
+					<div class="col s3">
+						<span style="font-weight:600; text-transform:capitalize;">{{itemDetails['rate']}}/-</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>Category</span>
+					</div>
+					<div class="col s3">
+						<span style="font-weight:600; text-transform:capitalize;">{{itemDetails['categoryName']}}</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>City</span>
+					</div>
+					<div class="col s3">
+						<span style="font-weight:600; text-transform:capitalize;">{{itemDetails['sellerDetails']['city']}}</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>Seller</span>
+					</div>
+					<div class="col s3">
+						<span style="font-weight:600; text-transform:capitalize;">{{itemDetails['sellerDetails']['name']}}</span>
+					</div>
+					<div class="col s12" style="margin-top:1rem; margin-bottom: 1rem;">
+						<div class="divider"></div>
+					</div>
+					<div class="col s12">
+						<span class="blue-text text-darken-4" style="font-weight:bold;">Customer Rating</span>
+					</div>
+					<div class="col s12">
+						{% if itemDetails['averageRating'] == 5 %}
+							<span>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+							</span>
+						{% elif itemDetails['averageRating'] == 4 %}
+							<span>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star_border</i>
+							</span>
+						{% elif itemDetails['averageRating'] == 3 %}
+							<span>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+							</span>
+						{% elif itemDetails['averageRating'] == 2 %}
+							<span>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+							</span>
+						{% elif itemDetails['averageRating'] == 1 %}
+							<span>
+								<i class="material-icons  orange-text">star</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+							</span>
+						{% elif itemDetails['averageRating'] == 0 %}
+							<span>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+							</span>
+						{%  endif %}
+					</div>
+					<div class="col s12" style="margin-top:1rem; margin-bottom: 1rem;">
+						<div class="divider"></div>
+					</div>
+					<div class="col s12">
+						<span class="blue-text text-darken-4" style="font-weight:bold;">Description</span>
+					</div>
+					<div class="col s12">
+						{{itemDetails['description']}}
+					</div>
+					<div class="col s12" style="margin-top:1rem; margin-bottom: 1rem;">
+						<div class="divider"></div>
+					</div>
+					<div class="col s12 center-align">
+						<div class="row">
+							<div class="col s6">
+								<form action="{{url_for('addToCart')}}" method="post">
+									<input type="hidden" name="itemID" value="{{itemID}}">
+									<button class="btn modal-trigger blue darken-4" data-target="add-cart">
+										Add To Cart
+										<i class="material-icons left white-text">shopping_cart</i>
+									</button>
+								</form>
+							</div>
+							<div class="col s6">
+								<form action="" method="post">
+									<input type="hidden" name="itemID" value="{{itemID}}">
+									<button class="btn blue darken-4 modal-trigger" type="submit" data-target="rate-item">
+										Rate Item
+										<i class="material-icons left white-text">thumb_up</i>
+									</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col s12 z-depth-1 grey lighten-5" style="margin-bottom:1rem">
+				<div class="row" style="margin-bottom: 0;">
+					<div class="col s1" style="margin-top: .5rem; margin-bottom: .5rem;">
+						<img src="{{userDetails['imgUrl']}}" style="border-radius: 50%; width: 3rem; height: 3rem;" class="z-depth-1">
+					</div>
+					<div class="col s11 input-field" style="margin-top:0; margin-bottom: 0; padding-left: 3rem; padding-right: 3rem;">
+						<form action="{{url_for('postComment')}}" method="post" autocomplete="off">
+							<input type="hidden" name="itemID" value="{{itemID}}">
+							<input type="hidden" name="userID" value="{{userID}}">
+							<input type="text" name="comment" placeholder="type comment here.." required>
+						</form>
+					</div>
+				</div>
+			</div>
+			{% if itemComment %}
+				<ul class="collection with-header z-depth-1">
+					<li>
+						<p style="font-weight:bold; margin: 0;" class="center-align collection-header blue darken-4 white-text">Comments</p>
+					</li>
+					{% for i in itemComment %}
+					    <li class="collection-item avatar">
+					    	<img src="{{itemComment[i]['userDetails']['imgUrl']}}" class="circle z-depth-1">
+					      	<p class="black-text" style="font-weight:bold; text-transform: capitalize;" href="">{{itemComment[i]['userDetails']['name']}}</p>
+					      	<p class="blue-grey-text">{{itemComment[i]['comment']}}</p>
+					      	<p class="blue-grey-text text-lighten-3" style="font-size: x-small; font-style:italic; font-weight:500;">{{itemComment[i]['date']}} {{itemComment[i]['time']}}</p>
+					      	{% if userID == itemComment[i]['userID'] %}
+					      		<a href="#edit-comment_{{i}}" class="secondary-content modal-trigger" style="margin-right:3rem;"><i class="material-icons left">edit</i></a>
+					      		<div id="edit-comment_{{i}}" class="modal">
+									<form action="{{url_for('updateComment')}}" method="post">
+										<div class="modal-content">
+									    	<h5 class="blue-text text-darken-4" style="font-weight: bold;">Update Comment</h5>
+									    	<div class='input-field'>
+												<i class="material-icons prefix">question_answer</i>
+												<input id='input-comment' type="text" name="comment" required class="validate" value="{{itemComment[i]['comment']}}" autocomplete="off">
+												<label for='input-comment'>Comment</label>
+											</div>
+									    </div>
+									    <div class="modal-footer">
+								    		<input type="hidden" name="itemID" value="{{itemID}}">
+								    		<input type="hidden" name="commentID" value="{{i}}">
+								    		<input type="submit" name="" value="UPDATE" class="btn-flat blue-text text-darken-4">
+									    </div>
+								    </form>
+								</div>
+					      		<a href="#delete-comment_{{i}}" class="secondary-content modal-trigger"><i class="material-icons">delete</i></a>
+					      		<div id="delete-comment_{{i}}" class="modal">
+									<div class="modal-content">
+								    	<h4>Delete Comment</h4>
+								      	<p>Are you sure to delete comment?</p>
+								    </div>
+								    <div class="modal-footer">
+								    	<form action="{{url_for('deleteComment')}}" method="post" style="display: inline-block;">
+								    		<input type="hidden" name="commentID" value="{{i}}">
+								    		<input type="hidden" name="itemID" value="{{itemID}}">
+								    		<input type="submit" name="" value="DELETE" class="btn-flat red-text">
+								    	</form>
+								    </div>
+								</div>
+					      	{% endif %}
+					    </li>
+				    {% endfor %}
+				</ul>
+			{% endif %}
+		</div>
+		<div class="col s12" id="user-profile">
+			<div class="card-panel grey lighten-2">
+				<div class="row">
+					<div class= "col s12 center-align">
+						<img src="{{othUserDetails['imgUrl']}}" class="circle responsive-img z-depth-1" style="height: 6rem; width: 6rem;">
+					</div>
+					<div class= "col s12 center-align">
+						<h5 class="blue-text text-darken-4" style="text-transform: capitalize; font-weight: bold;">{{othUserDetails['name']}}</h5>
+						<span class="blue-grey-text text-lighten-1">{{othUserDetails['email']}}</span>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">Name</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold; text-transform: capitalize;">{{othUserDetails['name']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">Mobile Number</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold;">{{othUserDetails['mobileNumber']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">Email</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold; overflow-wrap: break-word;">{{othUserDetails['email']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">City</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold; overflow-wrap: break-word; text-transform: capitalize;">{{othUserDetails['city']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">Address</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold; overflow-wrap: break-word;">{{othUserDetails['address']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class="col s12 user-sec center-align">
+						<a href="{{url_for('userChatPage', recID=othID)}}" class="btn blue darken-4">
+							<i class="material-icons white-text left">chat</i>
+							CHAT
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>
+<div id="add-cart" class="modal">
+	<form action="{{url_for('addToCart')}}" method="post">
+		<div class="modal-content">
+	    	<h5 class="blue-text text-darken-4" style="font-weight: bold;">Enter the quantity of <span style="text-transform: capitalize;">{{itemDetails['name']}}</span></h5>
+	    	<div class='input-field'>
+				<i class="material-icons prefix">looks_one</i>
+				<input id='input-quantity' type="number" name="qty" required class="validate" min="1">
+				<label for='input-quantity'>Quantity</label>
+			</div>
+	    </div>
+	    <div class="modal-footer">
+    		<input type="hidden" name="itemID" value="{{itemID}}">
+    		<input type="submit" name="" value="ADD TO CART" class="btn-flat blue-text text-darken-4">
+	    </div>
+    </form>
+</div>
+<div id="rate-item" class="modal">
+	<form action="{{url_for('rateItem')}}" method="post">
+		<div class="modal-content">
+	    	<h5 class="blue-text text-darken-4" style="font-weight: bold;">Rate the Item</h5>
+	    	<div class="row">
+		    	<div class="col s12 input-field">
+	              	<label>
+	              		<input type="radio" name="rating" value="5" class="validate with-gap" required>
+	                		<span>
+	                			<i class="material-icons orange-text">star</i>
+	                			<i class="material-icons orange-text">star</i>
+	                			<i class="material-icons orange-text">star</i>
+	                			<i class="material-icons orange-text">star</i>
+	                			<i class="material-icons orange-text">star</i>
+	                		</span>
+	              	</label>
+	            </div>
+	            <div class="col s12 input-field">
+	              	<label>
+	              		<input type="radio" name="rating" value="4" class="validate with-gap" required>
+	                		<span>
+	                			<i class="material-icons orange-text">star</i>
+	                			<i class="material-icons orange-text">star</i>
+	                			<i class="material-icons orange-text">star</i>
+	                			<i class="material-icons orange-text">star</i>
+	                			<i class="material-icons orange-text">star_border</i>
+	                		</span>
+	              	</label>
+	            </div>
+	            <div class="col s12 input-field">
+	              	<label>
+	              		<input type="radio" name="rating" value="3" class="validate with-gap" required>
+	                		<span>
+	                			<i class="material-icons orange-text">star</i>
+	                			<i class="material-icons orange-text">star</i>
+	                			<i class="material-icons orange-text">star</i>
+	                			<i class="material-icons orange-text">star_border</i>
+	                			<i class="material-icons orange-text">star_border</i>
+	                		</span>
+	              	</label>
+	            </div>
+	            <div class="col s12 input-field">
+	              	<label>
+	              		<input type="radio" name="rating" value="2" class="validate with-gap" required>
+	                		<span>
+	                			<i class="material-icons orange-text">star</i>
+	                			<i class="material-icons orange-text">star</i>
+	                			<i class="material-icons orange-text">star_border</i>
+	                			<i class="material-icons orange-text">star_border</i>
+	                			<i class="material-icons orange-text">star_border</i>
+	                		</span>
+	              	</label>
+	            </div>
+	            <div class="col s12 input-field">
+	              	<label>
+	              		<input type="radio" name="rating" value="1" class="validate with-gap" required>
+	                		<span>
+	                			<i class="material-icons orange-text">star</i>
+	                			<i class="material-icons orange-text">star_border</i>
+	                			<i class="material-icons orange-text">star_border</i>
+	                			<i class="material-icons orange-text">star_border</i>
+	                			<i class="material-icons orange-text">star_border</i>
+	                		</span>
+	              	</label>
+	            </div>
+		        <div class="col s12 input-field">
+		          	<label>
+		          		<input type="radio" name="rating" value="0" class="validate with-gap" required>
+		            		<span>
+		            			<i class="material-icons orange-text">star_border</i>
+		            			<i class="material-icons orange-text">star_border</i>
+		            			<i class="material-icons orange-text">star_border</i>
+		            			<i class="material-icons orange-text">star_border</i>
+		            			<i class="material-icons orange-text">star_border</i>
+		            		</span>
+		          	</label>
+		        </div>
+	    	</div>
+	    </div>
+	    <div class="modal-footer">
+    		<input type="hidden" name="itemID" value="{{itemID}}">
+    		<input type="submit" name="" value="RATE" class="btn-flat blue-text text-darken-4">
+	    </div>
+    </form>
+</div>
+{% endblock %}

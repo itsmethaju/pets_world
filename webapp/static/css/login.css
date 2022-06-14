@@ -1,0 +1,27 @@
+.navigation-bar{
+	padding-left: 1%;
+}
+.title-name-l{
+	font-size: 1.8rem;
+}
+.title-name-sm{
+	font-size: 1rem;
+}
+.login-form{
+	margin-top: 2%;
+}
+.row{
+	margin-bottom: 0px;
+}
+
+.signup-form{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+i{
+	color: #0d47a1;
+}
+.modal .modal-content{
+	padding-top: 0px;
+	padding-bottom: 0px;
+}

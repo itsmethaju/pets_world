@@ -1,0 +1,53 @@
+{% extends 'layout_user.html' %}
+{% block content %}
+<div class="container" style="margin-top: 1.5rem;">
+	<a href="{{url_for('profile', flag='own')}}" class="blue-text text-darken-4"><i class="material-icons left">arrow_back_ios</i>back</a>
+</div>
+<div class="container">
+	<div class="card-panel grey lighten-2">
+		<div class="row">
+			<div class= "col s12 center-align">
+				<img src="{{userDetails['imgUrl']}}" class="circle responsive-img z-depth-1" style="height: 6rem; width: 6rem;">
+			</div>
+			<div class= "col s12 center-align">
+				<h5 class="blue-text text-darken-4" style="text-transform: capitalize; font-weight: bold;">{{userDetails['name']}}</h5>
+				<span class="blue-grey-text text-lighten-1">{{userDetails['email']}}</span>
+			</div>
+			<form action="{{url_for('updateProfile')}}" method="post" enctype="multipart/form-data">
+				<div class="col s12 input-field">
+					<i class="material-icons prefix">account_circle</i>
+					<input type="text" name="name" value="{{userDetails['name']}}" id='user-name' class="validate" required>
+					<label for="user-name">Name</label>
+				</div>
+				<div class="col s12 input-field">
+					<i class="material-icons prefix">smartphone</i>
+					<input type="text" name="mobileNumber" value="{{userDetails['mobileNumber']}}" id='user-mobile' class="validate" required>
+					<label for="user-mobile">Mobile Number</label>
+				</div>
+				<div class="col s12 input-field">
+					<i class="material-icons prefix">location_city</i>
+					<input type="text" name="city" value="{{userDetails['city']}}" id='user-city' class="validate" required>
+					<label for="user-city">City</label>
+				</div>
+				<div class="col s12 file-field input-field">
+					<div class="btn blue darken-4">
+						<span>PHOTO</span>
+						<input type="file" name="photo" class="validate">
+					</div>
+					<div class="file-path-wrapper">
+						<input class="file-path validate" type="text">
+					</div>
+				</div>
+				<div class="col s12 input-field">
+					<i class="material-icons prefix">place</i>
+					<textarea class='materialize-textarea validate' name="address" id="user-address" required>{{userDetails['address']}}</textarea>
+					<label for="user-address">Address</label>
+				</div>
+				<div class="col s12 center-align">
+					<input type="submit" name="" value="UPDATE" class="btn blue darken-4">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

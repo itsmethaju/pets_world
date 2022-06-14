@@ -1,0 +1,58 @@
+{% extends 'layout_user.html' %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col s12 center-align">
+			<h5 style="font-weight:bold;" class="blue-text text-darken-4">PURCHASE DETAILS</h5>
+		</div>
+		<div class="col s12">
+			{% if userCart %}
+				<div style="overflow-x: auto;">
+					<table class="highlight centered">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Item Name</th>
+								<th>Quantity</th>
+								<th>Price (Per Unit)</th>
+								<th>Total Price</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for i in userCart %}
+								{% if userCart[i]['stockStatus'] == 'available' %}
+									<tr>
+										<td><img src="{{userCart[i]['itemDetails']['imgList'][0]['imgUrl']}}" style="width : 3rem; height: 2rem;"></td>
+										<td class="blue-grey-text text-lighten-1" style="text-transform: capitalize;">
+											<a href="{{url_for('othItemProfile', itemID=i)}}">
+												<span style="text-decoration: underline;">{{userCart[i]['itemDetails']['name']}}</span>
+											</a>
+										</td>
+										<td class="blue-grey-text text-lighten-1">{{userCart[i]['qty']}}</td>
+										<td class="blue-grey-text text-lighten-1">{{userCart[i]['itemDetails']['rate']}}</td>
+										<td class="blue-grey-text text-lighten-1">{{userCart[i]['totalPrice']}}/-</td>
+									</tr>
+								{% endif %}
+							{% endfor %}
+						</tbody>
+						<tfoot>
+							<tr>
+								<th class="center-align">Grand Total</th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th class="center-align">{{grandTotal}}/-</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			{% endif %}
+		</div>
+		<div class="col s12 center-align" style="margin-top: 1rem">
+			<form action="{{url_for('purchaseItem')}}" method="post">
+				<input type="submit" name="" value="Purchase Item" class="btn blue darken-4">
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

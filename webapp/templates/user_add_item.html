@@ -1,0 +1,55 @@
+{% extends 'layout_user.html' %}
+{% block content %}
+<div class='container' style="margin-top:1.5rem">
+	<div class="card-panel grey lighten-2">
+		<div class="row">
+			<div class="col s12 center-align">
+				<h5 class='blue-text text-darken-4' style="text-decoration: underline; font-weight: bold;">ADD ITEM</h5>
+			</div>
+			<form action="{{url_for('itemReg')}}" method="post" enctype="multipart/form-data">
+				<div class="col s12 input-field">
+					<i class="fas fa-pen prefix"></i>
+					<input type="text" name="name" id='item-name' class="validate" required>
+					<label for="item-name">Item Name</label>
+				</div>
+				<div class="col s12 input-field">
+					<i class="material-icons prefix">category</i>
+				    <select name="catID" required>
+				    	<option value="" selected disabled>Select Category</option>
+				    	{% for i in categoryList %}
+					      	<option value="{{i}}">{{categoryList[i]['name']}}</option>
+				      	{% endfor %}
+				    </select>
+				</div>
+				<div class="col s12 m12 l6 input-field">
+					<i class="fas fa-rupee-sign prefix"></i>
+					<input type="number" name="rate" id='item-rate' class="validate" required>
+					<label for="item-rate">Rate (per unit)</label>
+				</div>
+				<div class="col s12 m12 l6 input-field">
+					<i class="material-icons prefix">looks_one</i>
+					<input type="number" name="stock" id='item-stock' class="validate" required>
+					<label for="item-stock">Stock</label>
+				</div>
+				<div class="col s12 file-field input-field">
+					<div class="btn blue darken-4">
+						<span>ITEM PHOTOS</span>
+						<input type="file" name="photo" multiple class="validate" required>
+					</div>
+					<div class="file-path-wrapper">
+						<input class="file-path validate" type="text">
+					</div>
+				</div>
+				<div class="col s12 input-field">
+					<i class="material-icons prefix">description</i>
+					<textarea class="materialize-textarea validate" name="description" id='item-desc' required></textarea>
+					<label for="item-desc">Description</label>
+				</div>
+				<div class="col s12 center-align">
+					<input type="submit" name="" value='ADD ITEM' class="btn blue darken-4">
+				</div>
+			</form>
+		</div>
+	</div>	
+</div>
+{% endblock %}

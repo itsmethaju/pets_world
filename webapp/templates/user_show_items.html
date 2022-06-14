@@ -1,0 +1,84 @@
+{% extends 'layout_user.html' %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col s12 center-align"><h5 style="font-weight:bold">MY ITEMS</h5></div>
+	    <div class="col s12">
+	    	<div class="row">
+	    		{%for i in itemList%}
+		    		<div class="col s12">
+		    			<div class="card horizontal">
+				      		<div class="card-image">
+				        		<img class="hide-on-small-only" src="{{itemList[i]['imgList'][0]['imgUrl']}}" style="height: 13rem; width: 17rem;">
+				        		<img class="hide-on-med-and-up responsive-img" src="{{itemList[i]['imgList'][0]['imgUrl']}}" style="height: 100%; width: 100%;">
+				      		</div>
+				      		<div class="card-stacked">
+				        		<div class="card-content">
+				          			<p class="grey-text text-darken-3" style="font-weight: bold; margin:0; text-transform: capitalize;">{{itemList[i]['name']}}</p>
+				          			{% if itemList[i]['averageRating'] == 5 %}
+							            <span>
+							            	<i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							            </span>
+							        {% elif itemList[i]['averageRating'] == 4 %}
+							            <span>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							            </span>
+							        {% elif itemList[i]['averageRating'] == 3 %}
+							            <span>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							            </span>
+							        {% elif itemList[i]['averageRating'] == 2 %}
+							            <span>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							            </span>
+							        {% elif itemList[i]['averageRating'] == 1 %}
+							            <span>
+							                <i class="material-icons orange-text" style="font-size: large;">star</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							            </span>
+							        {% elif itemList[i]['averageRating'] == 0 %}
+							            <span>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+							            </span>
+							        {% endif %}
+				          			<p class="blue-text text-darken-4" style="font-weight: bold;"><i class="fas fa-rupee-sign"></i>{{itemList[i]['rate']}}/-</p>
+				          			<p>
+				          				<span style="font-weight:500;" class="grey-text">Stock:</span>
+				          				<span style="font-weight: bold;">{{itemList[i]['stock']}}</span>
+				          			</p>
+				        		</div>
+				        		<div class="card-action">
+				          			<a href="{{url_for('itemProfile', itemID=i)}}">MORE DETAILS</a>
+				        		</div>
+				      		</div>
+				    	</div>
+		    		</div>
+		    	{% endfor %}
+	    	</div>	
+		</div>
+	</div>
+</div>
+{% endblock %}

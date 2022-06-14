@@ -1,0 +1,31 @@
+{% if session == 'user' %}
+    {% extends 'layout_user.html' %}
+{% elif session == 'admin' %}
+    {% extends 'layout_admin.html' %}
+{% endif %}
+{% block content %}
+<div class="container">
+	<div class="collection with-header z-depth-1">
+        <p style="font-weight:bold; margin: 0;" class="center-align collection-header blue darken-4 white-text">INBOX</p>
+        {% for i in msgList %}
+            {% if session == 'user' %}
+                {% if msgList[i]['othUserID'] != 'ADMIN' %}
+                    <a href="{{url_for('userChatPage', recID=msgList[i]['othUserID'])}}" class="collection-item avatar">
+                        <img src="{{msgList[i]['userDetails']['imgUrl']}}" class="circle z-depth-1">
+                        <p class="black-text" style="font-weight:bold; text-transform: capitalize;">{{msgList[i]['userDetails']['name']}}</p>
+                        <p class="blue-grey-text">{{msgList[i]['message']}}</p>
+                        <p class="blue-grey-text text-lighten-3" style="font-size: x-small; font-style:italic; font-weight:500;">{{msgList[i]['date']}} {{msgList[i]['time']}}</p>
+                    </a>
+                {% endif %}
+            {% elif session == 'admin' %}
+                <a href="{{url_for('adminChatPage', recID=msgList[i]['othUserID'])}}" class="collection-item avatar">
+                    <img src="{{msgList[i]['userDetails']['imgUrl']}}" class="circle z-depth-1">
+                    <p class="black-text" style="font-weight:bold; text-transform: capitalize;">{{msgList[i]['userDetails']['name']}}</p>
+                    <p class="blue-grey-text">{{msgList[i]['message']}}</p>
+                    <p class="blue-grey-text text-lighten-3" style="font-size: x-small; font-style:italic; font-weight:500;">{{msgList[i]['date']}} {{msgList[i]['time']}}</p>
+                </a>
+            {% endif %}
+        {% endfor %}
+     </div>
+</div>
+{% endblock %}

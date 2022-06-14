@@ -1,0 +1,196 @@
+{% extends 'layout_user.html' %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col s12">
+			<ul class="tabs">
+				<li class="tab col s6"><a class="blue-text text-darken-4" href="#item-profile">Item Details</a></li>
+				<li class="tab col s6"><a class="blue-text text-darken-4" href="#item-history">History</a></li>
+			</ul>
+		</div>
+		<div class="col s12 m12 l8 offset-l2" id="item-profile">
+			<div class="card-panel">
+				<div class="slider hide-on-small-only img-show-1">
+					<ul class="slides">
+						{% for i in itemDetails['imgList']%}
+						<li>
+							<img src="{{i['imgUrl']}}" style="width:38rem; height: 24rem;">
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="slider hide-on-med-and-up img-show-2">
+					<ul class="slides">
+						{% for i in itemDetails['imgList']%}
+						<li>
+							<img class="" src="{{i['imgUrl']}}" style="width:21rem; height: 15rem;">
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="row">
+					<div class="col s12">
+						<span class="blue-text text-darken-4" style="font-weight:bold;">Details</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>Name</span>
+					</div>
+					<div class="col s9">
+						<span style="font-weight:600; text-transform:capitalize;">{{itemDetails['name']}}</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>Category</span>
+					</div>
+					<div class="col s9">
+						<span style="font-weight:600; text-transform:capitalize;">{{itemDetails['categoryName']}}</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>Stock</span>
+					</div>
+					<div class="col s9">
+						<span style="font-weight:600; text-transform:capitalize;">{{itemDetails['stock']}}</span>
+					</div>
+					<div class="col s12" style="margin-top:1rem; margin-bottom: 1rem;">
+						<div class="divider"></div>
+					</div>
+					<div class="col s12">
+						<span class="blue-text text-darken-4" style="font-weight:bold;">Customer Rating</span>
+					</div>
+					<div class="col s12">
+						{% if itemDetails['averageRating'] == 5 %}
+							<span>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+							</span>
+						{% elif itemDetails['averageRating'] == 4 %}
+							<span>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star_border</i>
+							</span>
+						{% elif itemDetails['averageRating'] == 3 %}
+							<span>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+							</span>
+						{% elif itemDetails['averageRating'] == 2 %}
+							<span>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+							</span>
+						{% elif itemDetails['averageRating'] == 1 %}
+							<span>
+								<i class="material-icons  orange-text">star</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+							</span>
+						{% elif itemDetails['averageRating'] == 0 %}
+							<span>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+								<i class="material-icons orange-text">star_border</i>
+							</span>
+						{%  endif %}
+					</div>
+					<div class="col s12" style="margin-top:1rem; margin-bottom: 1rem;">
+						<div class="divider"></div>
+					</div>
+					<div class="col s12">
+						<span class="blue-text text-darken-4" style="font-weight:bold;">Description</span>
+					</div>
+					<div class="col s12">
+						{{itemDetails['description']}}
+					</div>
+					<div class="col s12" style="margin-top:1rem; margin-bottom: 1rem;">
+						<div class="divider"></div>
+					</div>
+					<div class="col s6 center-align">
+						<a href="{{url_for('editItemDetails', itemID=itemID)}}"class='btn blue darken-4'><i class="material-icons left hide-on-small-only" style="color:white">edit</i>EDIT</a>
+					</div>
+					<div class="col s6 center-align">
+						<a href="#modal1" class='btn blue darken-4 modal-trigger'><i class="material-icons left hide-on-small-only" style="color:white">delete</i>DELETE</a>
+					</div>
+				</div>
+			</div>
+			{% if itemComment %}
+				<ul class="collection with-header z-depth-1">
+					<li>
+						<p style="font-weight:bold; margin: 0;" class="center-align collection-header blue darken-4 white-text">Comments</p>
+					</li>
+					{% for i in itemComment %}
+					    <li class="collection-item avatar">
+					    	<img src="{{itemComment[i]['userDetails']['imgUrl']}}" class="circle z-depth-1">
+					      	<p class="black-text" style="font-weight:bold; text-transform: capitalize;" href="">{{itemComment[i]['userDetails']['name']}}</p>
+					      	<p class="blue-grey-text">{{itemComment[i]['comment']}}</p>
+					      	<p class="blue-grey-text text-lighten-3" style="font-size: x-small; font-style:italic; font-weight:500;">{{itemComment[i]['date']}} {{itemComment[i]['time']}}</p>
+					    </li>
+				    {% endfor %}
+				</ul>
+			{% endif %}
+		</div>
+		<div class="col s12" id="item-history">
+			{% if transHistory %}
+				<div style="overflow-x: auto;">
+					<table class="highlight centered">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Date</th>
+								<th>Item Name</th>
+								<th>Quantity</th>
+								<th>Price (Per Unit)</th>
+								<th>Total Price</th>
+								<th>Seller Name</th>
+								<th>Buyer Name</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for i in transHistory %}
+								<tr>
+									<td><img src="{{transHistory[i]['itemDetails']['imgList'][0]['imgUrl']}}" style="width : 3rem; height: 2rem;"></td>
+									<td class="blue-grey-text text-lighten-1">{{transHistory[i]['date']}}</td>
+									<td class="blue-grey-text text-lighten-1" style="text-transform: capitalize;">{{transHistory[i]['itemDetails']['name']}}</td>
+									<td class="blue-grey-text text-lighten-1">{{transHistory[i]['qty']}}</td>
+									<td class="blue-grey-text text-lighten-1">{{transHistory[i]['itemDetails']['rate']}}</td>
+									<td class="blue-grey-text text-lighten-1">{{transHistory[i]['totalPrice']}}</td>
+									<td class="blue-grey-text text-lighten-1" style="text-transform: capitalize;">{{transHistory[i]['sellerDetails']['name']}}</td>
+									<td class="blue-grey-text text-lighten-1" style="text-transform: capitalize;">{{transHistory[i]['buyerDetails']['name']}}</td>
+									<td><a href="{{url_for('userTransDetails', transID=i)}}" class="btn blue darken-4">Details</a></td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			{% endif %}
+		</div>	
+	</div>
+</div>
+<div id="modal1" class="modal">
+	<div class="modal-content">
+    	<h4>DELETE ITEM</h4>
+      	<p>Are you sure to delete this item?</p>
+    </div>
+    <div class="modal-footer">
+    	<form action="{{url_for('deleteItem')}}" method="post" style="display: inline-block;">
+    		<input type="hidden" name="itemID" value="{{itemID}}">
+    		<input type="submit" name="" value="DELETE" class="btn-flat red-text">
+    	</form>
+    </div>
+</div>
+{% endblock %}

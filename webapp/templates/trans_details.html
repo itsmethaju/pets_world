@@ -1,0 +1,273 @@
+{% if session == 'admin' %}
+	{% extends 'layout_admin.html' %}
+{% elif session == 'user'  %}
+	{% extends 'layout_user.html' %}
+{% endif %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col s12 center-align">
+			<h5 style="font-weight: bold;" class="blue-text text-darken-4">TRANSACTION DETAILS</h5>
+		</div>
+		<div class="col s12">
+			<ul class="tabs">
+				<li class="tab col s4"><a class="blue-text text-darken-4" href="#item-details">Item Details</a></li>
+				<li class="tab col s4"><a class="blue-text text-darken-4" href="#seller-details">Seller Details</a></li>
+				<li class="tab col s4"><a class="blue-text text-darken-4" href="#buyer-details">Buyer Details</a></li>
+			</ul>
+		</div>
+		<div class="col s12 m12 l8 offset-l2" id="item-details">
+			<div class="card-panel">
+				<div class="slider hide-on-small-only img-show-1">
+					<ul class="slides">
+						{% for i in transDetails['itemDetails']['imgList']%}
+						<li>
+							<img src="{{i['imgUrl']}}" style="width:38rem; height: 24rem;">
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="slider hide-on-med-and-up img-show-2">
+					<ul class="slides">
+						{% for i in transDetails['itemDetails']['imgList']%}
+						<li>
+							<img class="" src="{{i['imgUrl']}}" style="width:21rem; height: 15rem;">
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="row">
+					<div class="col s12">
+						<span class="blue-text text-darken-4" style="font-weight:bold;">Details</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>Name</span>
+					</div>
+					<div class="col s3">
+						<span style="font-weight:600; text-transform:capitalize;">{{transDetails['itemDetails']['name']}}</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>Price</span>
+					</div>
+					<div class="col s3">
+						<span style="font-weight:600; text-transform:capitalize;">{{transDetails['itemDetails']['rate']}}/-</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>Category</span>
+					</div>
+					<div class="col s3">
+						<span style="font-weight:600; text-transform:capitalize;">{{transDetails['itemDetails']['categoryName']}}</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>City</span>
+					</div>
+					<div class="col s3">
+						<span style="font-weight:600; text-transform:capitalize;">{{transDetails['sellerDetails']['city']}}</span>
+					</div>
+					<div class="col s12" style="margin-top:1rem; margin-bottom: 1rem;">
+						<div class="divider"></div>
+					</div>
+					<div class="col s12">
+						<span class="blue-text text-darken-4" style="font-weight:bold;">Description</span>
+					</div>
+					<div class="col s12">
+						{{transDetails['itemDetails']['description']}}
+					</div>
+					<div class="col s12" style="margin-top:1rem; margin-bottom: 1rem;">
+						<div class="divider"></div>
+					</div>
+					<div class="col s12">
+						<span class="blue-text text-darken-4" style="font-weight:bold;">Transaction Details</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>Seller</span>
+					</div>
+					<div class="col s3">
+						<span style="font-weight:600; text-transform:capitalize;">{{transDetails['sellerDetails']['name']}}</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>Buyer</span>
+					</div>
+					<div class="col s3">
+						<span style="font-weight:600; text-transform:capitalize;">{{transDetails['buyerDetails']['name']}}</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>Quantity</span>
+					</div>
+					<div class="col s3">
+						<span style="font-weight:600; text-transform:capitalize;">{{transDetails['qty']}}</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>Total Price</span>
+					</div>
+					<div class="col s3">
+						<span style="font-weight:600; text-transform:capitalize;">{{transDetails['totalPrice']}}/-</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>Date</span>
+					</div>
+					<div class="col s3">
+						<span style="font-weight:600; text-transform:capitalize;">{{transDetails['date']}}</span>
+					</div>
+					<div class="col s3">
+						<span class='blue-grey-text text-lighten-1'>Time</span>
+					</div>
+					<div class="col s3">
+						<span style="font-weight:600; text-transform:capitalize;">{{transDetails['time']}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col s12" id="seller-details">
+			<div class="card-panel grey lighten-2">
+				<div class="row">
+					<div class= "col s12 center-align">
+						<img src="{{transDetails['sellerDetails']['imgUrl']}}" class="circle responsive-img z-depth-1" style="height: 6rem; width: 6rem;">
+					</div>
+					<div class= "col s12 center-align">
+						<h5 class="blue-text text-darken-4" style="text-transform: capitalize; font-weight: bold;">{{transDetails['sellerDetails']['name']}}</h5>
+						<span class="blue-grey-text text-lighten-1">{{transDetails['sellerDetails']['email']}}</span>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">Name</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold; text-transform: capitalize;">{{transDetails['sellerDetails']['name']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">Mobile Number</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold;">{{transDetails['sellerDetails']['mobileNumber']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">Email</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold; overflow-wrap: break-word;">{{transDetails['sellerDetails']['email']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">City</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold; overflow-wrap: break-word; text-transform: capitalize;">{{transDetails['sellerDetails']['city']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">Address</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold; overflow-wrap: break-word;">{{transDetails['sellerDetails']['address']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					{% if session == 'admin' %}
+					<div class="col s12 user-sec center-align">
+						<a href="{{url_for('adminChatPage', recID=transDetails['buyerID'])}}" class="btn blue darken-4">
+							<i class="material-icons white-text left">chat</i>
+							CHAT
+						</a>
+					</div>
+					{%  elif session == 'user' %}
+						{% if userID != transDetails['sellerID'] %}
+							<div class="col s12 user-sec center-align">
+								<a href="{{url_for('userChatPage', recID=transDetails['buyerID'])}}" class="btn blue darken-4">
+									<i class="material-icons white-text left">chat</i>
+									CHAT
+								</a>
+							</div>
+						{% endif %}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="col s12" id="buyer-details">
+			<div class="card-panel grey lighten-2">
+				<div class="row">
+					<div class= "col s12 center-align">
+						<img src="{{transDetails['buyerDetails']['imgUrl']}}" class="circle responsive-img z-depth-1" style="height: 6rem; width: 6rem;">
+					</div>
+					<div class= "col s12 center-align">
+						<h5 class="blue-text text-darken-4" style="text-transform: capitalize; font-weight: bold;">{{transDetails['buyerDetails']['name']}}</h5>
+						<span class="blue-grey-text text-lighten-1">{{transDetails['buyerDetails']['email']}}</span>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">Name</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold; text-transform: capitalize;">{{transDetails['buyerDetails']['name']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">Mobile Number</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold;">{{transDetails['buyerDetails']['mobileNumber']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">Email</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold; overflow-wrap: break-word;">{{transDetails['buyerDetails']['email']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">City</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold; overflow-wrap: break-word; text-transform: capitalize;">{{transDetails['buyerDetails']['city']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					<div class= "col s6 left-align user-sec">
+						<span style="font-weight: bold;">Address</span>
+					</div>
+					<div class= "col s6 right-align user-sec">
+						<span style="font-weight: bold; overflow-wrap: break-word;">{{transDetails['buyerDetails']['address']}}</span>
+					</div>
+					<div class='col s12'>
+						<div class="divider grey lighten-1"></div>
+					</div>
+					{% if session == 'admin' %}
+					<div class="col s12 user-sec center-align">
+						<a href="{{url_for('adminChatPage', recID=transDetails['buyerID'])}}" class="btn blue darken-4">
+							<i class="material-icons white-text left">chat</i>
+							CHAT
+						</a>
+					</div>
+					{%  elif session == 'user' %}
+						{% if userID != transDetails['buyerID'] %}
+							<div class="col s12 user-sec center-align">
+								<a href="{{url_for('userChatPage', recID=transDetails['buyerID'])}}" class="btn blue darken-4">
+									<i class="material-icons white-text left">chat</i>
+									CHAT
+								</a>
+							</div>
+						{% endif %}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

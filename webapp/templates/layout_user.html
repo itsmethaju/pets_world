@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="icon" type="image/x-icon" href="static/images/favicon.ico"> -->
+  <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='images/favicon.ico')}}">
+  <title>PETS WORLD</title>
+  <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/0bcccc8139.js" crossorigin="anonymous"></script>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/user_home.css')}}">
+</head>
+<body>
+  <ul id="dropdown1" class="dropdown-content">
+    <li><a href="{{url_for('profile', flag='own')}}" class="blue-text text-darken-4"><i class="material-icons">person</i>Profile</a></li>
+    <li><a href="{{url_for('userChatPage', recID='admin')}}" class="blue-text text-darken-4"><i class="material-icons">contact_support</i>Support</a></li>
+    <li><a href="{{url_for('logout')}}" class="blue-text text-darken-4"><i class="material-icons">logout</i>Logout</a></li>
+  </ul>
+  <ul id="dropdown2" class="dropdown-content">
+    <li><a href="{{url_for('addItem')}}" class="blue-text text-darken-4"><i class="material-icons">add</i>Add Item</a></li>
+    <li><a href="{{url_for('showItems')}}" class="blue-text text-darken-4"><i class="material-icons">collections</i>Show My Items</a></li>
+  </ul>
+  <div class="navbar-fixed">
+    <nav>
+      <div class='nav-wrapper blue darken-4 navigation-bar'>
+        <a class='brand-logo' href="{{url_for('homePage')}}">
+          <span class="title-name-sm hide-on-med-and-up valign-wrapper">PETS WORLD</span>
+          <span class="title-name-l hide-on-small-only">PETS WORLD</span>
+        </a>
+        <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons" style="color:white;">menu</i></a>
+        <ul class="right hide-on-med-and-up">
+          <li><a class="modal-trigger" href="#show-cart"><i class="material-icons left" style="color:white;">shopping_cart</i></a></li>
+        </ul>
+        <ul class="right hide-on-med-and-down">
+            <li><a class="modal-trigger" href="#show-cart"><i class="material-icons left" style="color:white;">shopping_cart</i>Cart</a></li>
+            <li><a href="{{url_for('userHistory')}}"><i class="material-icons left" style="color:white;">history</i>History</a></li>
+            <li><a href="{{url_for('userInbox')}}"><i class="material-icons left" style="color:white;">mail_outline</i>Inbox</a></li>
+            <li><a class="dropdown-trigger" data-target="dropdown2" href="">My Items<i class="material-icons right" style="color:white;">arrow_drop_down</i></a></li>
+            <li><a class="dropdown-trigger" data-target="dropdown1" href="">Hi <span style="text-transform: capitalize;">{{userDetails['name']}}</span>!<i class="material-icons right" style="color:white; font-size: 2.5rem;">account_circle</i></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <ul class="sidenav" id="mobile-demo">
+    <li>
+      <div class="user-view">
+        <div class="background">
+          <!-- <img src="static/images/user-bg.jpg"> -->
+          <img src="{{url_for('static',filename='images/user-bg.jpg')}}">
+        </div>
+        <a href="{{url_for('profile', flag='own')}}"><img class="circle" src="{{userDetails['imgUrl']}}"></a>
+        <a href="{{url_for('profile', flag='own')}}"><span class="white-text name">{{userDetails['name']}}</span></a>
+        <a href="{{url_for('profile', flag='own')}}"><span class="white-text email">{{userDetails['email']}}</span></a>
+      </div>
+    </li>
+    <li><a href="{{url_for('homePage')}}">Home</a></li>
+    <li>
+      <ul class="collapsible collapsible-accordion">
+        <li>
+          <a class="collapsible-header">My Items</a>
+          <div class="collapsible-body">
+            <ul>
+              <li ><a href="{{url_for('addItem')}}"><i class="material-icons black-text">add</i>Add Item</a></li>
+              <li><a href="{{url_for('showItems')}}"><i class="material-icons black-text">collections</i>Show My Items</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </li>
+    <li><a href="{{url_for('userHistory')}}">History</a></li>
+    <li><a href="{{url_for('profile', flag='own')}}">Profile</a></li>
+    <li><a href="{{url_for('userInbox')}}">Inbox</a></li>
+    <li><a href="{{url_for('userChatPage', recID='admin')}}">Admin Support</a></li>
+    <li><a href="{{url_for('logout')}}">Logout</a></li>
+  </ul>
+  <div id="show-cart" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h5 class="blue-text text-darken-4" style="font-weight: bold;">CART</h5>
+      <div>
+        {% if userCart %}
+          <div style="overflow-x: auto;">
+            <table class="highlight centered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Item Name</th>
+                  <th>Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in userCart %}
+                  <tr>
+                    <td><img src="{{userCart[i]['itemDetails']['imgList'][0]['imgUrl']}}" style="width : 3rem; height: 2rem;"></td>
+                    <td class="blue-grey-text text-lighten-1" style="text-transform: capitalize;">{{userCart[i]['itemDetails']['name']}}</td>
+                    <td class="blue-grey-text text-lighten-1">{{userCart[i]['qty']}}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="modal-footer">
+      {% if userCart %}
+        <a href="{{url_for('detailedCart')}}" class="btn blue darken-4">DETAILED CART</a>
+      {% endif %}
+    </div>
+  </div>
+  {% block content %}
+  {% endblock %}
+  <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems);
+      });
+    </script>
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.dropdown-trigger');
+        var dropdownOptions = {
+          coverTrigger : false,
+          constrainWidth: false
+        }
+        var instances = M.Dropdown.init(elems, dropdownOptions);
+      });
+    </script>
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.collapsible');
+        var instances = M.Collapsible.init(elems);
+      });
+    </script>
+    <script type="text/javascript">
+      var el = document.querySelector('.tabs');
+      var instance = M.Tabs.init(el);
+    </script>
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.img-show-1');
+        options = {height:360}
+        var instances = M.Slider.init(elems, options);
+      });
+    </script>
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.img-show-2');
+        options = {height:210}
+        var instances = M.Slider.init(elems, options);
+      });
+    </script>
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems, {dismissible: true});
+      });
+    </script>
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems);
+      });
+    </script>
+</body>
+</html>

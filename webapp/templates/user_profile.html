@@ -1,0 +1,66 @@
+{% extends 'layout_user.html' %}
+{% block content %}
+<div class="container" style="margin-top: 1.5rem;">
+	<div class="card-panel grey lighten-2">
+		<div class="row">
+			<div class= "col s12 center-align">
+				<img src="{{userDetails['imgUrl']}}" class="circle responsive-img z-depth-1" style="height: 6rem; width: 6rem;">
+			</div>
+			<div class= "col s12 center-align">
+				<h5 class="blue-text text-darken-4" style="text-transform: capitalize; font-weight: bold;">{{userDetails['name']}}</h5>
+				<span class="blue-grey-text text-lighten-1">{{userDetails['email']}}</span>
+			</div>
+			<div class= "col s6 left-align user-sec">
+				<span style="font-weight: bold;">Name</span>
+			</div>
+			<div class= "col s6 right-align user-sec">
+				<span style="font-weight: bold;">{{userDetails['name']}}</span>
+			</div>
+			<div class='col s12'>
+				<div class="divider grey lighten-1"></div>
+			</div>
+			<div class= "col s6 left-align user-sec">
+				<span style="font-weight: bold;">Mobile Number</span>
+			</div>
+			<div class= "col s6 right-align user-sec">
+				<span style="font-weight: bold;">{{userDetails['mobileNumber']}}</span>
+			</div>
+			<div class='col s12'>
+				<div class="divider grey lighten-1"></div>
+			</div>
+			<div class= "col s6 left-align user-sec">
+				<span style="font-weight: bold;">Email</span>
+			</div>
+			<div class= "col s6 right-align user-sec">
+				<span style="font-weight: bold; overflow-wrap: break-word;">{{userDetails['email']}}</span>
+			</div>
+			<div class='col s12'>
+				<div class="divider grey lighten-1"></div>
+			</div>
+			<div class= "col s6 left-align user-sec">
+				<span style="font-weight: bold;">City</span>
+			</div>
+			<div class= "col s6 right-align user-sec">
+				<span style="font-weight: bold; overflow-wrap: break-word;">{{userDetails['city']}}</span>
+			</div>
+			<div class='col s12'>
+				<div class="divider grey lighten-1"></div>
+			</div>
+			<div class= "col s6 left-align user-sec">
+				<span style="font-weight: bold;">Address</span>
+			</div>
+			<div class= "col s6 right-align user-sec">
+				<span style="font-weight: bold; overflow-wrap: break-word;">{{userDetails['address']}}</span>
+			</div>
+			<div class='col s12'>
+				<div class="divider grey lighten-1"></div>
+			</div>
+			{% if flag == 'own' %}
+				<div class='col s12 center' style="margin-top: 1rem;">
+					<a href="{{url_for('editProfile')}}" class="btn blue darken-4">EDIT</a>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}

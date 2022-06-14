@@ -1,0 +1,516 @@
+{% extends 'layout_user.html' %}
+{% block content %}
+<div class="row" style="margin-top:1rem;">
+  <div class="col s3 hide-on-med-and-down">
+    <span style="font-weight: bold;">Filters</span>
+    <a class='right blue-text text-darken-2' href="{{url_for('homePage')}}">clear filter</a>
+    <ul class="collapsible">
+      <li>
+        <div class="collapsible-header">
+          <i class="material-icons">location_city</i>
+          <span style="margin-right:auto;">City</span>
+          <i class="material-icons">expand_more</i>
+        </div>
+        <div class="collapsible-body">
+          <div class="row" style="margin-bottom:0;">
+            <div class="col s12">
+              <span style="font-weight:bold;">select any of the location</span>
+            </div>
+            <form action="{{url_for('filterHomePage')}}" method="get">
+              {% for i in locationList %}
+                <div class="col s12 input-field">
+                    <label>
+                      <input type="radio" name="catName" value="{{i}}" class="with-gap" required>
+                      <span>{{i}}</span>
+                    </label>
+                </div>
+              {% endfor %}
+              <div class="col s12 input-field">
+                <input type="hidden" name="catID" value="location">
+                <input type="submit" name="" value='APPLY' class="btn black" style="margin-top:1rem">
+              </div>
+            </form>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="collapsible-header">
+          <i class="material-icons">category</i>
+          <span style="margin-right:auto;">Categories</span>
+          <i class="material-icons">expand_more</i>
+        </div>
+        <div class="collapsible-body">
+          <div class="row" style="margin-bottom:0;">
+            <div class="col s12">
+              <span style="font-weight:bold;">select any of one</span>
+            </div>
+            <form action="{{url_for('filterHomePage')}}" method="get">
+              {% for i in categoryList %}
+                <div class="col s12 input-field">
+                    <label>
+                      <input type="radio" name="catName" value="{{i}}" class="validate with-gap" required>
+                      <span>{{categoryList[i]['name']}}</span>
+                    </label>
+                </div>
+              {% endfor %}
+              <div class="col s12 input-field">
+                <input type="hidden" name="catID" value="category">
+                <input type="submit" name="" value='APPLY' class="btn black" style="margin-top:1rem">
+              </div>
+          </form>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="collapsible-header">
+          <i class="material-icons">star</i>
+          <span style="margin-right:auto;">Customer Ratings</span>
+          <i class="material-icons">expand_more</i>
+        </div>
+        <div class="collapsible-body">
+          <div class="row" style="margin-bottom:0;">
+            <div class="col s12">
+              <span style="font-weight:bold;">select any of one</span>
+            </div>
+            <form action="{{url_for('filterHomePage')}}" method="get">
+              <div class="col s12 input-field">
+              	<label>
+              		<input type="radio" name="catName" value="5" class="validate with-gap" required>
+                		<span>
+                			<i class="material-icons">star</i>
+                			<i class="material-icons">star</i>
+                			<i class="material-icons">star</i>
+                			<i class="material-icons">star</i>
+                			<i class="material-icons">star</i>
+                		</span>
+              	</label>
+              </div>
+              <div class="col s12 input-field">
+              	<label>
+              		<input type="radio" name="catName" value="4" class="validate with-gap" required>
+                		<span>
+                			<i class="material-icons">star</i>
+                			<i class="material-icons">star</i>
+                			<i class="material-icons">star</i>
+                			<i class="material-icons">star</i>
+                			<i class="material-icons">star_border</i>
+                		</span>
+              	</label>
+              </div>
+              <div class="col s12 input-field">
+              	<label>
+              		<input type="radio" name="catName" value="3" class="validate with-gap" required>
+                		<span>
+                			<i class="material-icons">star</i>
+                			<i class="material-icons">star</i>
+                			<i class="material-icons">star</i>
+                			<i class="material-icons">star_border</i>
+                			<i class="material-icons">star_border</i>
+                		</span>
+              	</label>
+              </div>
+              <div class="col s12 input-field">
+              	<label>
+              		<input type="radio" name="catName" value="2" class="validate with-gap" required>
+                		<span>
+                			<i class="material-icons">star</i>
+                			<i class="material-icons">star</i>
+                			<i class="material-icons">star_border</i>
+                			<i class="material-icons">star_border</i>
+                			<i class="material-icons">star_border</i>
+                		</span>
+              	</label>
+              </div>
+              <div class="col s12 input-field">
+              	<label>
+              		<input type="radio" name="catName" value="1" class="validate with-gap" required>
+                		<span>
+                			<i class="material-icons">star</i>
+                			<i class="material-icons">star_border</i>
+                			<i class="material-icons">star_border</i>
+                			<i class="material-icons">star_border</i>
+                			<i class="material-icons">star_border</i>
+                		</span>
+              	</label>
+              </div>
+             	<div class="col s12 input-field">
+              	<label>
+              		<input type="radio" name="catName" value="0" class="validate with-gap" required>
+                		<span>
+                			<i class="material-icons">star_border</i>
+                			<i class="material-icons">star_border</i>
+                			<i class="material-icons">star_border</i>
+                			<i class="material-icons">star_border</i>
+                			<i class="material-icons">star_border</i>
+                		</span>
+              	</label>
+              </div>
+              <div class="col s12 input-field">
+                <input type="hidden" name="catID" value="rating">
+                <input type="submit" name="" value='APPLY' class="btn black" style="margin-top:1rem">
+              </div>
+          </form>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="collapsible-header">
+          <i class="fas fa-rupee-sign"></i>
+          <span style="margin-right: auto;">Price</span>
+          <i class="material-icons">expand_more</i>
+        </div>
+        <div class="collapsible-body">
+          <div class="row" style="margin-bottom:0;">
+            <div class="col s12">
+              <span style="font-weight:bold;">enter the price range</span>
+            </div>
+            <form action="{{url_for('filterHomePage')}}" method="get">
+              <div class="col s12 input-field">
+                <input type="number" name="minLimit" id='min-range' class="validate" required>
+                <label for="min-range">enter min price range</label>
+              </div>
+              <div class="col s12 input-field">
+                <input type="number" name="maxLimit" id='max-range' class="validate" required>
+                <label for="max-range">enter max price range</label>
+              </div>
+              <div class="col s12 input-field">
+                  <input type="hidden" name="catID" value="rate">
+                <input type="submit" name="" value='APPLY' class="btn black">
+              </div>
+            </form>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="col s12 m12 l9">
+    <div class="row">
+      <form action="{{url_for('searchHomePage')}}" method="get">
+        <div class="col s11 input-field">
+          <i class="material-icons prefix">search</i>
+          <input type="hidden" name="catID" value="{{catID}}">
+          <input type="hidden" name="catName" value="{{catName}}">
+          <input type="search" name="searchItem" id='craft-search' placeholder="search items here.." required>
+        </div>
+      </form>
+      <div class="col s12 hide-on-large-only">
+        <div class="row z-depth-1" style="margin:.5rem;">
+          <div class="col s6 center-align" style="border-right: solid lightgray 1px; padding: .5rem">
+            <a href="#modal1" class="modal-trigger">FILTER</a>
+          </div>
+          <div class="col s6 center-align" style="padding: .5rem">
+            <a href="{{url_for('homePage')}}">CLEAR FILTER</a>
+          </div>
+        </div>
+      </div>
+      <!-- Modal Structure -->
+      <div id="modal1" class="modal bottom-sheet">
+        <div class="modal-content">
+          <ul class="collapsible">
+            <li>
+              <div class="collapsible-header">
+                <i class="material-icons">location_city</i>
+                <span style="margin-right:auto;">City</span>
+                <i class="material-icons">expand_more</i>
+              </div>
+              <div class="collapsible-body">
+                <div class="row" style="margin-bottom:0;">
+                  <div class="col s12">
+                    <span style="font-weight:bold;">select any of the location</span>
+                  </div>
+                  <form action="{{url_for('filterHomePage')}}" method="get">
+                    {% for i in locationList %}
+                      <div class="col s12 input-field">
+                          <label>
+                            <input type="radio" name="catName" value="{{i}}" class="with-gap" required>
+                            <span>{{i}}</span>
+                          </label>
+                      </div>
+                    {% endfor %}
+                    <div class="col s12 input-field">
+                      <input type="hidden" name="catID" value="location">
+                      <input type="submit" name="" value='APPLY' class="btn black" style="margin-top:1rem">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header">
+                <i class="material-icons">category</i>
+                <span style="margin-right:auto;">Categories</span>
+                <i class="material-icons">expand_more</i>
+              </div>
+              <div class="collapsible-body">
+                <div class="row" style="margin-bottom:0;">
+                  <div class="col s12">
+                    <span style="font-weight:bold;">select any of one</span>
+                  </div>
+                  <form action="{{url_for('filterHomePage')}}" method="get">
+                    {% for i in categoryList %}
+                      <div class="col s12 input-field">
+                          <label>
+                            <input type="radio" name="catName" value="{{i}}" class="validate with-gap" required>
+                            <span>{{categoryList[i]['name']}}</span>
+                          </label>
+                      </div>
+                    {% endfor %}
+                    <div class="col s12 input-field">
+                      <input type="hidden" name="catID" value="category">
+                      <input type="submit" name="" value='APPLY' class="btn black" style="margin-top:1rem">
+                    </div>
+                </form>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header">
+                <i class="material-icons">star</i>
+                <span style="margin-right:auto;">Customer Ratings</span>
+                <i class="material-icons">expand_more</i>
+              </div>
+              <div class="collapsible-body">
+                <div class="row" style="margin-bottom:0;">
+                  <div class="col s12">
+                    <span style="font-weight:bold;">select any of one</span>
+                  </div>
+                  <form action="{{url_for('filterHomePage')}}" method="get">
+                  	<div class="col s12 input-field">
+                        <label>
+                            <input type="radio" name="catName" value="5" class="validate with-gap" required>
+                            <span>
+                            	<i class="material-icons">star</i>
+      		              			<i class="material-icons">star</i>
+      		              			<i class="material-icons">star</i>
+      		              			<i class="material-icons">star</i>
+      		              			<i class="material-icons">star</i>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="col s12 input-field">
+                        <label>
+                            <input type="radio" name="catName" value="4" class="validate with-gap" required>
+                            <span>
+                            	<i class="material-icons">star</i>
+      		              			<i class="material-icons">star</i>
+      		              			<i class="material-icons">star</i>
+      		              			<i class="material-icons">star</i>
+      		              			<i class="material-icons">star_border</i>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="col s12 input-field">
+                        <label>
+                            <input type="radio" name="catName" value="3" class="validate with-gap" required>
+                            <span>
+                            	<i class="material-icons">star</i>
+      		              			<i class="material-icons">star</i>
+      		              			<i class="material-icons">star</i>
+      		              			<i class="material-icons">star_border</i>
+      		              			<i class="material-icons">star_border</i>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="col s12 input-field">
+                        <label>
+                            <input type="radio" name="catName" value="2" class="validate with-gap" required>
+                            <span>
+                            	<i class="material-icons">star</i>
+      		              			<i class="material-icons">star</i>
+      		              			<i class="material-icons">star_border</i>
+      		              			<i class="material-icons">star_border</i>
+      		              			<i class="material-icons">star_border</i>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="col s12 input-field">
+                        <label>
+                            <input type="radio" name="catName" value="1" class="validate with-gap" required>
+                            <span>
+                            	<i class="material-icons">star</i>
+      		              			<i class="material-icons">star_border</i>
+      		              			<i class="material-icons">star_border</i>
+      		              			<i class="material-icons">star_border</i>
+      		              			<i class="material-icons">star_border</i>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="col s12 input-field">
+                        <label>
+                            <input type="radio" name="catName" value="0" class="validate with-gap" required>
+                            <span>
+                            	<i class="material-icons">star_border</i>
+      		              			<i class="material-icons">star_border</i>
+      		              			<i class="material-icons">star_border</i>
+      		              			<i class="material-icons">star_border</i>
+      		              			<i class="material-icons">star_border</i>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="col s12 input-field">
+                      <input type="hidden" name="catID" value="rating">
+                      <input type="submit" name="" value='APPLY' class="btn black" style="margin-top:1rem">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header">
+                <i class="fas fa-rupee-sign"></i>
+                <span style="margin-right: auto;">Price</span>
+                <i class="material-icons">expand_more</i>
+              </div>
+              <div class="collapsible-body">
+                <div class="row" style="margin-bottom:0;">
+                  <div class="col s12">
+                    <span style="font-weight:bold;">enter the price range</span>
+                  </div>
+                  <form action="{{url_for('filterHomePage')}}" method="get">
+                    <div class="col s12 input-field">
+                      <input type="number" name="minLimit" id='mob-min-range' class="validate" required>
+                      <label for="mob-min-range">enter min price range</label>
+                    </div>
+                    <div class="col s12 input-field">
+                      <input type="number" name="maxLimit" id='mob-max-range' class="validate" required>
+                      <label for="mob-max-range">enter max price range</label>
+                    </div>
+                    <div class="col s12 input-field">
+                        <input type="hidden" name="catID" value="rate">
+                      <input type="submit" name="" value='APPLY' class="btn black">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      {% for i in othItemList %}
+        <div class="col l3 card hide-on-med-and-down" style="margin:2rem; padding:0;">
+          <div class="card-image">
+            <img src="{{othItemList[i]['imgList'][0]['imgUrl']}}" style="width:100%; height: 10rem;">
+          </div>
+          <div class="card-content" style="padding: .5rem">
+            <p class="grey-text text-darken-3" style="font-weight: bold; margin:0; text-transform: capitalize;">{{othItemList[i]['name']}}</p>
+            {% if othItemList[i]['averageRating'] == 5 %}
+              <span>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+              </span>
+            {% elif othItemList[i]['averageRating'] == 4 %}
+              <span>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+              </span>
+            {% elif othItemList[i]['averageRating'] == 3 %}
+              <span>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+              </span>
+            {% elif othItemList[i]['averageRating'] == 2 %}
+              <span>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+              </span>
+            {% elif othItemList[i]['averageRating'] == 1 %}
+              <span>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+              </span>
+            {% elif othItemList[i]['averageRating'] == 0 %}
+              <span>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+              </span>
+            {% endif %}
+            <p class="blue-text text-darken-4" style="font-weight: bold;"><i class="fas fa-rupee-sign"></i>{{othItemList[i]['rate']}}/-</p>
+          </div>
+          <div class="card-action" style="padding-left : .5rem; padding-right : .5rem;">
+            <a href="{{url_for('othItemProfile', itemID=i)}}">MORE DETAILS</a>
+          </div>
+        </div>
+        <div class="col s5 m5 card hide-on-large-only" style="margin:1rem; padding:0;">
+          <div class="card-image">
+            <img src="{{othItemList[i]['imgList'][0]['imgUrl']}}" style="width:100%; height: 10rem;">
+          </div>
+          <div class="card-content" style="padding: .5rem">
+            <p class="grey-text text-darken-3" style="font-weight: bold; margin:0; text-transform: capitalize;">{{othItemList[i]['name']}}</p>
+            {% if othItemList[i]['averageRating'] == 5 %}
+              <span>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+              </span>
+            {% elif othItemList[i]['averageRating'] == 4 %}
+              <span>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+              </span>
+            {% elif othItemList[i]['averageRating'] == 3 %}
+              <span>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+              </span>
+            {% elif othItemList[i]['averageRating'] == 2 %}
+              <span>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+              </span>
+            {% elif othItemList[i]['averageRating'] == 1 %}
+              <span>
+                <i class="material-icons orange-text" style="font-size: large;">star</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+              </span>
+            {% elif othItemList[i]['averageRating'] == 0 %}
+              <span>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+                <i class="material-icons orange-text" style="font-size: large;">star_border</i>
+              </span>
+            {% endif %}
+            <p class="blue-text text-accent-4" style="font-weight: bold;"><i class="fas fa-rupee-sign"></i>{{othItemList[i]['rate']}}/-</p>
+          </div>
+          <div class="card-action" style="padding-left : .25rem; padding-right : .25rem; padding-top: .25rem; padding-bottom: .25rem;">
+            <a href="{{url_for('othItemProfile', itemID=i)}}">MORE DETAILS</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

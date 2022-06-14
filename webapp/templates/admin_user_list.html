@@ -1,0 +1,34 @@
+{% extends 'layout_admin.html' %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col s12">
+			<h5 style="text-decoration: underline;">USER LIST</h5>
+		</div>
+		{% for user in userList %}
+			<div class="card col s12 m12 l5" style="padding-top: 1rem; margin: 1rem;">
+				<div class="row" style="margin-bottom: 0;">
+					<div class="col s3">
+						<div class="card-image">
+							<img src="{{userList[user]['imgUrl']}}" style="height:5rem; width: 5rem; border-radius: 50%;">
+						</div>
+					</div>
+					<div class="col s9">
+						<div class="card-title">
+							<span style="font-weight: bold; text-transform: capitalize;">{{userList[user]['name']}}</span>
+						</div>
+						<div class="card-content" style="padding: 0;">
+							<p class="blue-grey-text text-lighten-1">{{userList[user]['email']}}</p>
+							<p class="blue-grey-text text-lighten-1">{{userList[user]['mobileNumber']}}</p>
+						</div>
+					</div>
+					<div class="col s12 card-action">
+						<a href="{{url_for('adminUserProfile', userID=user)}}">MORE DETAILS</a>
+						<a href="{{url_for('adminChatPage', recID=user)}}">CHAT</a>
+					</div>
+				</div>		
+			</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}
